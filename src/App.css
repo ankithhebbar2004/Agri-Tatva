@@ -1,0 +1,77 @@
+/* Custom CSS for Crop Yield Prediction Web App */
+
+/* Custom heading styles */
+.custom-heading {
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+/* Custom box styles */
+.custom-box {
+  background-color: #333333;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+  position: relative;
+}
+
+/* Glow effect on hover */
+.custom-box:hover {
+  box-shadow: 0 0 50px rgba(158, 220, 245, 0.8);
+}
+
+/* Custom subheading styles */
+.custom-subheading {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Custom form label styles */
+.form-label {
+  color: #ffffff;
+}
+
+/* Custom form input styles */
+.form-control {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #f0f0f0;
+}
+
+/* Predict button styles */
+.btn-predict {
+  background-color: #333333;
+  border-color: #444444;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease-in-out;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Reflection pseudo-element */
+.btn-predict::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Reflection effect on hover */
+.btn-predict:hover::after {
+  transform: translateY(0);
+}
+
+.prediction-result {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+}
