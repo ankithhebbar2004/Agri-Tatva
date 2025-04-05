@@ -1,0 +1,6 @@
+pip install flask==2.0.1
+pip install flask-cors==3.0.10
+pip install numpy==1.22.3
+pip install scikit-learn==1.0.2
+pip install pymongo==4.3.3
+pip install python-dotenv==1.0.0

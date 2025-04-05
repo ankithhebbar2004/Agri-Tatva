@@ -1,7 +1,3 @@
-"""
-NOTE: This file will be moved to the backend directory.
-You can run it from there or keep using it here for backward compatibility.
-"""
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 import numpy as np
@@ -10,11 +6,45 @@ import sklearn
 from pymongo import MongoClient
 from datetime import datetime
 import os
+import sys
+from dotenv import load_dotenv
+
+# Add parent directory to path so we can import from there
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 print(sklearn.__version__)
 
-# MongoDB Setup
-client = MongoClient('mongodb://localhost:27017/')
-db = client['crop_yield_db']
+# MongoDB Setup - Use environment variables for flexible configuration
+load_dotenv()
+
+# First check for MongoDB Atlas URI (highest priority)
+mongodb_uri = os.environ.get('MONGODB_URI')
+
+if mongodb_uri:
+    # Use MongoDB Atlas connection
+    print(f"Connecting to MongoDB Atlas cluster")
+    client = MongoClient(mongodb_uri)
+    # Extract DB name from URI or use default
+    db_name = os.environ.get('MONGODB_DB_NAME', 'crop_yield_db')
+    db = client[db_name]
+else:
+    # Fallback to direct connection parameters
+    mongo_host = os.environ.get('MONGODB_HOST', 'localhost')
+    mongo_port = int(os.environ.get('MONGODB_PORT', 27017))
+    mongo_db = os.environ.get('MONGODB_DB_NAME', 'crop_yield_db')
+    mongo_user = os.environ.get('MONGODB_USER', '')
+    mongo_password = os.environ.get('MONGODB_PASSWORD', '')
+    
+    # Build connection string
+    if mongo_user and mongo_password:
+        connection_string = f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/"
+    else:
+        connection_string = f"mongodb://{mongo_host}:{mongo_port}/"
+    
+    print(f"Connecting to MongoDB at {mongo_host}:{mongo_port}")
+    client = MongoClient(connection_string)
+    db = client[mongo_db]
+
 predictions_collection = db['predictions']
 
 # Check if MongoDB connection is working and database exists
@@ -44,14 +74,30 @@ def check_mongodb_connection():
         print(f"❌ MongoDB connection error: {e}")
         return False
 
-#loading models
-dtr = pickle.load(open('dtr.pkl','rb'))
-preprocessor = pickle.load(open('preprocessor.pkl','rb'))
+# Adjust paths for model loading - look in both current directory and parent directory
+def find_model_path(filename):
+    if os.path.exists(filename):
+        return filename
+    elif os.path.exists(os.path.join('..', filename)):
+        return os.path.join('..', filename)
+    else:
+        raise FileNotFoundError(f"Could not find model file: {filename}")
 
-#flask app
-app = Flask(__name__)
+# Loading models
+try:
+    dtr = pickle.load(open(find_model_path('dtr.pkl'),'rb'))
+    preprocessor = pickle.load(open(find_model_path('preprocessor.pkl'),'rb'))
+except Exception as e:
+    print(f"Error loading models: {e}")
+    sys.exit(1)
+
+# Flask app
+app = Flask(__name__, 
+           static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static'),
+           template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'))
 CORS(app)  # Enable CORS for all routes
 
+# Routes
 @app.route('/')
 def index():
     return render_template('index.html')
