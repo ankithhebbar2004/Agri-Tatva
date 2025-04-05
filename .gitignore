@@ -51,3 +51,6 @@ ENV/
 .vscode/
 *.swp
 *.swo
+
+# Environment variables
+.env
