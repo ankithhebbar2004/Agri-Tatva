@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 import CropYieldForm from './components/CropYieldForm';
 import AuthForm from './components/AuthForm/AuthForm';
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -9,20 +11,35 @@ function App() {
   const handleLogin = (status) => {
     setIsLoggedIn(status);
   };
+  
+  function AppRoutes() {
+    const navigate = useNavigate();
+    
+    const goToHome = () => {
+      navigate('/');
+    };
+
+    return (
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route 
+            path="/auth" 
+            element={!isLoggedIn ? <AuthForm onLogin={handleLogin} goToHome={goToHome} /> : <Navigate to="/predict" />} 
+          />
+          <Route 
+            path="/predict" 
+            element={isLoggedIn ? <CropYieldForm goToHome={goToHome} /> : <Navigate to="/auth" />} 
+          />
+        </Routes>
+      </div>
+    );
+  }
 
   return (
-    <div className="container">
-      <h1 className="text-center text-success custom-heading mt-5 mb-4">Crop Yield Prediction Per Country</h1>
-      <div className="row justify-content-center">
-        <div className="col-lg-6">
-          {!isLoggedIn ? (
-            <AuthForm onLogin={handleLogin} />
-          ) : (
-            <CropYieldForm />
-          )}
-        </div>
-      </div>
-    </div>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 
