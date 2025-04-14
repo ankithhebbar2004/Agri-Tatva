@@ -86,7 +86,7 @@ const Contact = () => {
       <div className="contact-section">
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-8">
               <h1 className="mb-4">Contact Us</h1>
               <p className="lead">Have questions about our services? Reach out to us!</p>
               
@@ -108,29 +108,79 @@ const Contact = () => {
                   <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
                 </div>
               </div>
+
+              <div className="physical-contact-info mt-4">
+                <h4 className="physical-contact-heading">Physical Contact Information</h4>
+                <div className="contact-method">
+                  <div className="contact-method-icon">
+                    <i className="fas fa-building"></i>
+                  </div>
+                  <div className="contact-method-details">
+                    <div className="contact-method-title">Main Office</div>
+                    <p>123 Agricultural Way, Farmville<br/>Sacramento, CA 95814</p>
+                  </div>
+                </div>
+                
+                <div className="contact-method">
+                  <div className="contact-method-icon">
+                    <i className="fas fa-phone-alt"></i>
+                  </div>
+                  <div className="contact-method-details">
+                    <div className="contact-method-title">Phone</div>
+                    <p>Main: +1 (123) 456-7890<br/>Support: +1 (123) 456-7891</p>
+                  </div>
+                </div>
+                
+                <div className="contact-method">
+                  <div className="contact-method-icon">
+                    <i className="fas fa-fax"></i>
+                  </div>
+                  <div className="contact-method-details">
+                    <div className="contact-method-title">Fax</div>
+                    <p>+1 (123) 456-7892</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="courier-info mt-4">
+                <h5>For Courier & Packages</h5>
+                <p>Please address all shipments to "Crop Yield Predictor - Attention: Receiving Department" and include our full address.</p>
+              </div>
+              
+              <div className="business-hours mt-4">
+                <h5>Business Hours</h5>
+                <div className="hours-grid">
+                  <div className="hours-item">
+                    <span className="hours-day">Monday - Friday:</span>
+                    <span>9:00 AM - 5:00 PM</span>
+                  </div>
+                  <div className="hours-item">
+                    <span className="hours-day">Saturday:</span>
+                    <span>10:00 AM - 2:00 PM</span>
+                  </div>
+                  <div className="hours-item">
+                    <span className="hours-day">Sunday:</span>
+                    <span>Closed</span>
+                  </div>
+                  <div className="hours-item">
+                    <span className="hours-day">Holidays:</span>
+                    <span>Closed</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="col-md-6">
-              <div className="contact-form-container">
-                <h3 className="mb-3">Send us a message</h3>
-                <form className="contact-form">
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Your Name</label>
-                    <input type="text" className="form-control" id="name" placeholder="Enter your name" required />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email Address</label>
-                    <input type="email" className="form-control" id="email" placeholder="Enter your email" required />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="subject" className="form-label">Subject</label>
-                    <input type="text" className="form-control" id="subject" placeholder="Subject" required />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="message" className="form-label">Message</label>
-                    <textarea className="form-control" id="message" rows="5" placeholder="Your message" required></textarea>
-                  </div>
-                  <button type="submit" className="btn btn-success">Send Message</button>
-                </form>
+            
+            <div className="col-md-4">
+              <div className="contact-map-container">
+                <h3 className="mb-3">Find Us</h3>
+                <div className="map-container">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3120.0286405540383!2d-121.49099048451395!3d38.576764979620136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ad0d64966c16f%3A0x93a9f42e09e3af6b!2sCalifornia%20State%20Capitol%20Park!5e0!3m2!1sen!2sus!4v1627309750174!5m2!1sen!2sus" 
+                    allowFullScreen="" 
+                    loading="lazy"
+                    title="Office Location Map"
+                  ></iframe>
+                </div>
               </div>
             </div>
           </div>

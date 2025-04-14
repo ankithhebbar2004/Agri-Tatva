@@ -132,16 +132,16 @@ const AuthForm = ({ onLogin, goToHome }) => {
          
 
           <div className="auth-divider">Or continue with</div>
-<div className="social-buttons">
-  <button type="button" className="social-btn">
-    Google
-  </button>
-  <button type="button" className="social-btn">
-    Facebook
-  </button>
-</div>
-
-
+          <div className="social-buttons">
+            <button type="button" className="social-btn google-btn">
+              <img 
+                src="https://icon2.cleanpng.com/20240216/yhs/transparent-google-logo-google-logo-with-colorful-letters-on-black-1710875297222.webp" 
+                alt="Google logo" 
+                className="google-icon" 
+              />
+              Continue with Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
