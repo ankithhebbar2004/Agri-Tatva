@@ -4,6 +4,8 @@ import './HomePage.css';
 import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
 import { ThemeContext } from '../../context/ThemeContext';
 import heroImage from '../assets/heroimage.jpeg';
+import logo from '../assets/logo.png';
+
 
 const HomePage = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -13,11 +15,9 @@ const HomePage = () => {
       {/* Navbar */}
       <nav className={`navbar navbar-expand-lg ${darkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}>
         <div className="container">
-          <div className="navbar-brand">
-            <img src="/logo-placeholder.png" alt="Logo" width="30" height="30" className="d-inline-block align-top me-2" />
-            <span>Crop Yield Predictor</span>
-          </div>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <div className="navbar-brand">
+  <img src={logo} alt="Logo" width="100" height="100"  className="d-inline-block align-top" />
+</div>  <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">

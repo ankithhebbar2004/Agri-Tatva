@@ -13,8 +13,11 @@
 .hero-section p {
   color: #ffffff; /* Makes the text white */
 }
-
-
+.navbar-brand img {
+  object-fit: contain;
+  background-color: transparent;
+  
+}
 
 .hero-section::before {
   content: '';
@@ -65,9 +68,33 @@
   text-decoration: underline;
 }
 
+
+
+
+
+
+/* Keep logo size but adjust its position */
 .navbar-brand {
   display: flex;
   align-items: center;
   font-weight: bold;
   color: #198754;
+  padding: 0; /* Remove padding from the brand */
+  height: 50px; /* Match navbar height */
+}
+
+
+.navbar-brand img {
+  object-fit: contain;
+  background-color: transparent;
+  padding-right: 150px;
+  margin-left: -90px;
+  max-height: 300px; /* Larger than before, but still fits navbar */
+  width: auto; /* Maintain aspect ratio */
+}
+
+/* Adjust nav links to fit in smaller navbar */
+.navbar .nav-link {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
