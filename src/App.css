@@ -75,3 +75,77 @@
   text-align: center;
   font-size: 1.5rem;
 }
+
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* Navbar dark mode */
+body.dark-mode .navbar {
+  background-color: #212529 !important;
+}
+
+body.dark-mode .navbar-brand,
+body.dark-mode .nav-link {
+  color: #ffffff;
+}
+
+body.dark-mode .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Cards and sections in dark mode */
+body.dark-mode .hero-section,
+body.dark-mode .about-section,
+body.dark-mode .services-section,
+body.dark-mode .contact-section {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+body.dark-mode .service-card,
+body.dark-mode .contact-form-container {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+/* Form controls in dark mode */
+body.dark-mode .form-control {
+  background-color: #333333;
+  border-color: #444444;
+  color: #ffffff;
+}
+
+body.dark-mode .form-control:focus {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode .form-label {
+  color: #ffffff;
+}
+
+/* Footer in dark mode */
+body.dark-mode .footer {
+  background-color: #212529 !important;
+  color: #ffffff;
+}
+
+body.dark-mode .footer a {
+  color: #5db778;
+}
+
+/* Update placeholders color */
+body.dark-mode .hero-image-placeholder,
+body.dark-mode .about-image-placeholder,
+body.dark-mode .service-icon {
+  background-color: #444444;
+  color: #ffffff;
+}

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Services.css';
+import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Services = () => {
+  const { darkMode } = useContext(ThemeContext);
   return (
-    <div className="services-page">
+    <div className={`services-page ${darkMode ? 'dark-mode' :''}`}>
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className={`navbar navbar-expand-lg ${darkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}>
         <div className="container">
           <div className="navbar-brand">
             <img src="/logo-placeholder.png" alt="Logo" width="30" height="30" className="d-inline-block align-top me-2" />
@@ -30,8 +33,9 @@ const Services = () => {
                 <Link className="nav-link" to="/contact">Contact</Link>
               </li>
             </ul>
-            <div className="d-flex">
+            <div className="d-flex align-items-center">
               <Link to="/auth" className="btn btn-outline-success me-2">Login / Signup</Link>
+              <DarkModeToggle />
             </div>
           </div>
         </div>
@@ -83,7 +87,7 @@ const Services = () => {
       </div>
 
       {/* Footer */}
-      <footer className="footer mt-5 py-4 bg-light">
+      <footer className={`footer mt-5 py-4 ${darkMode ? 'bg-dark' : 'bg-light'}`}>
         <div className="container">
           <div className="row">
             <div className="col-md-4">
