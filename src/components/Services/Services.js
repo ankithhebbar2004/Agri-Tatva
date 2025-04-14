@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './HomePage.css';
+import './Services.css';
 
-const HomePage = () => {
+const Services = () => {
   return (
-    <div className="homepage">
+    <div className="services-page">
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
@@ -18,13 +18,13 @@ const HomePage = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <Link className="nav-link active" to="/">Home</Link>
+                <Link className="nav-link" to="/">Home</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/about">About</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/services">Services</Link>
+                <Link className="nav-link active" to="/services">Services</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/contact">Contact</Link>
@@ -37,21 +37,45 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div className="hero-section">
+      {/* Services Content Section */}
+      <div className="services-section">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <h1>Predict Crop Yields with Precision</h1>
-              <p className="lead">
-                Our AI-powered analytics helps farmers and agricultural businesses make data-driven decisions for better crop yields and resource management.
-              </p>
-              <Link to="/auth" className="btn btn-success btn-lg">Get Started</Link>
+          <h1 className="text-center mb-5">Our Services</h1>
+          <div className="row">
+            <div className="col-md-4 mb-4">
+              <div className="service-card">
+                <div className="service-icon">
+                  <p className="text-center text-muted">[Icon]</p>
+                </div>
+                <h3>Crop Yield Prediction</h3>
+                <p>
+                  Our AI-powered model predicts crop yields based on various factors including soil type, 
+                  climate conditions, and historical data.
+                </p>
+              </div>
             </div>
-            <div className="col-md-6">
-              {/* Placeholder for hero image */}
-              <div className="hero-image-placeholder">
-                <p className="text-center text-muted">[Hero Image Placeholder]</p>
+            <div className="col-md-4 mb-4">
+              <div className="service-card">
+                <div className="service-icon">
+                  <p className="text-center text-muted">[Icon]</p>
+                </div>
+                <h3>Soil Analysis</h3>
+                <p>
+                  We provide comprehensive soil analysis to help you understand the nutrient content 
+                  and health of your soil for optimal crop growth.
+                </p>
+              </div>
+            </div>
+            <div className="col-md-4 mb-4">
+              <div className="service-card">
+                <div className="service-icon">
+                  <p className="text-center text-muted">[Icon]</p>
+                </div>
+                <h3>Agricultural Consulting</h3>
+                <p>
+                  Our team of experts offers personalized consulting services to help you implement 
+                  best practices and improve your farming operations.
+                </p>
               </div>
             </div>
           </div>
@@ -89,4 +113,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Services;

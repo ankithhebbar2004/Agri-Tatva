@@ -1,0 +1,43 @@
+.about-section {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+  }
+  
+  .about-image-placeholder {
+    height: 250px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  
+  .footer {
+    margin-top: auto;
+  }
+  
+  .footer a {
+    color: #198754;
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #198754;
+  }
+  
+  .nav-link.active {
+    font-weight: bold;
+    color: #198754 !important;
+  }
+  
+  .lead {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './HomePage.css';
+import './Contact.css';
 
-const HomePage = () => {
+const Contact = () => {
   return (
-    <div className="homepage">
+    <div className="contact-page">
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
@@ -18,7 +18,7 @@ const HomePage = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <Link className="nav-link active" to="/">Home</Link>
+                <Link className="nav-link" to="/">Home</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/about">About</Link>
@@ -27,7 +27,7 @@ const HomePage = () => {
                 <Link className="nav-link" to="/services">Services</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact">Contact</Link>
+                <Link className="nav-link active" to="/contact">Contact</Link>
               </li>
             </ul>
             <div className="d-flex">
@@ -37,21 +37,55 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div className="hero-section">
+      {/* Contact Content Section */}
+      <div className="contact-section">
         <div className="container">
-          <div className="row align-items-center">
+          <div className="row">
             <div className="col-md-6">
-              <h1>Predict Crop Yields with Precision</h1>
-              <p className="lead">
-                Our AI-powered analytics helps farmers and agricultural businesses make data-driven decisions for better crop yields and resource management.
-              </p>
-              <Link to="/auth" className="btn btn-success btn-lg">Get Started</Link>
+              <h1 className="mb-4">Contact Us</h1>
+              <p className="lead">Have questions about our services? Reach out to us!</p>
+              
+              <div className="contact-info mt-4">
+                <div className="contact-item">
+                  <h5>Address</h5>
+                  <p>123 Agricultural Way, Farmville, CA 95814</p>
+                </div>
+                <div className="contact-item">
+                  <h5>Email</h5>
+                  <p>contact@cropyieldpredictor.com</p>
+                </div>
+                <div className="contact-item">
+                  <h5>Phone</h5>
+                  <p>+1 (123) 456-7890</p>
+                </div>
+                <div className="contact-item">
+                  <h5>Hours</h5>
+                  <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                </div>
+              </div>
             </div>
             <div className="col-md-6">
-              {/* Placeholder for hero image */}
-              <div className="hero-image-placeholder">
-                <p className="text-center text-muted">[Hero Image Placeholder]</p>
+              <div className="contact-form-container">
+                <h3 className="mb-3">Send us a message</h3>
+                <form className="contact-form">
+                  <div className="mb-3">
+                    <label htmlFor="name" className="form-label">Your Name</label>
+                    <input type="text" className="form-control" id="name" placeholder="Enter your name" required />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email Address</label>
+                    <input type="email" className="form-control" id="email" placeholder="Enter your email" required />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="subject" className="form-label">Subject</label>
+                    <input type="text" className="form-control" id="subject" placeholder="Subject" required />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="message" className="form-label">Message</label>
+                    <textarea className="form-control" id="message" rows="5" placeholder="Your message" required></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-success">Send Message</button>
+                </form>
               </div>
             </div>
           </div>
@@ -89,4 +123,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Contact;

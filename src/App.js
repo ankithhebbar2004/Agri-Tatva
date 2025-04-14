@@ -4,6 +4,9 @@ import './App.css';
 import CropYieldForm from './components/CropYieldForm';
 import AuthForm from './components/AuthForm/AuthForm';
 import HomePage from './components/HomePage/HomePage';
+import About from './components/About/About';
+import Services from './components/Services/Services';
+import Contact from './components/Contact/Contact';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,6 +26,9 @@ function App() {
       <div className="app-container">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
           <Route 
             path="/auth" 
             element={!isLoggedIn ? <AuthForm onLogin={handleLogin} goToHome={goToHome} /> : <Navigate to="/predict" />} 

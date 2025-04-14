@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './HomePage.css';
+import './About.css';
 
-const HomePage = () => {
+const About = () => {
   return (
-    <div className="homepage">
+    <div className="about-page">
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
@@ -18,10 +18,10 @@ const HomePage = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <Link className="nav-link active" to="/">Home</Link>
+                <Link className="nav-link" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link active" to="/about">About</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/services">Services</Link>
@@ -37,22 +37,26 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div className="hero-section">
+      {/* About Content Section */}
+      <div className="about-section">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <h1>Predict Crop Yields with Precision</h1>
-              <p className="lead">
-                Our AI-powered analytics helps farmers and agricultural businesses make data-driven decisions for better crop yields and resource management.
-              </p>
-              <Link to="/auth" className="btn btn-success btn-lg">Get Started</Link>
-            </div>
-            <div className="col-md-6">
-              {/* Placeholder for hero image */}
-              <div className="hero-image-placeholder">
-                <p className="text-center text-muted">[Hero Image Placeholder]</p>
+          <div className="row">
+            <div className="col-md-8 offset-md-2 text-center">
+              <h1 className="mb-4">About Us</h1>
+              <div className="about-image-placeholder mb-4">
+                <p className="text-center text-muted">[Team Image Placeholder]</p>
               </div>
+              <p className="lead">
+                Founded in 2023, Crop Yield Predictor is dedicated to helping farmers maximize their crop yields through data-driven insights.
+              </p>
+              <p>
+                Our team of agricultural experts and data scientists has developed a sophisticated machine learning model that analyzes various factors 
+                such as soil type, climate conditions, and historical data to predict crop yields with remarkable accuracy.
+              </p>
+              <p>
+                We believe in sustainable farming practices and are committed to helping farmers make informed decisions that benefit 
+                both their businesses and the environment.
+              </p>
             </div>
           </div>
         </div>
@@ -89,4 +93,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default About;
