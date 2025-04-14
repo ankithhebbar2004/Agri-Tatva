@@ -87,7 +87,7 @@
 .navbar-brand img {
   object-fit: contain;
   background-color: transparent;
-  padding-right: 150px;
+  margin-right: 109px;
   margin-left: -90px;
   max-height: 300px; /* Larger than before, but still fits navbar */
   width: auto; /* Maintain aspect ratio */

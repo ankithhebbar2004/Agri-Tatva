@@ -1,0 +1,55 @@
+/* Sliding underline animation classes */
+.underline-navbar-container {
+  position: relative;
+}
+
+.nav-link.active {
+  color: #198754 !important;
+  font-weight: 600;
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: 4px;
+  width: 0px;
+  height: 20px;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0) 50%, rgba(31, 160, 100, 0));
+  box-shadow: 0 1px 5px rgba(16, 112, 64, 0.517);  border-radius: 3px; 
+}
+
+/* Animation classes for sliding direction */
+.slide-right {
+  transform-origin: left;
+  animation: slideRight 0.3s forwards;
+}
+
+.slide-left {
+  transform-origin: right;
+  animation: slideLeft 0.3s forwards;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: scaleX(0.5);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: scaleX(0.5);
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+}
+
+.underline-navbar-container {
+  position: relative;
+}

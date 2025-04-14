@@ -47,3 +47,20 @@
   .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-ball {
     transform: translateX(24px);
   }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #198754;
+    padding: 0; /* Remove padding from the brand */
+    height: 50px; /* Match navbar height */
+  }
+  
+  .navbar-brand img {
+    object-fit: contain;
+    background-color: transparent;
+    padding-right: 10px;
+    max-height: 100px; /* Maintain consistency across all pages */
+    width: auto; /* Maintain aspect ratio */
+  }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './AuthForm.css';
 
+
 const AuthForm = ({ onLogin, goToHome }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -128,6 +129,19 @@ const AuthForm = ({ onLogin, goToHome }) => {
               </button>
             </p>
           </div>
+         
+
+          <div className="auth-divider">Or continue with</div>
+<div className="social-buttons">
+  <button type="button" className="social-btn">
+    Google
+  </button>
+  <button type="button" className="social-btn">
+    Facebook
+  </button>
+</div>
+
+
         </div>
       </div>
     </div>
