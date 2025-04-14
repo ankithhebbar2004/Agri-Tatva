@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './HomePage.css';
 import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
 import { ThemeContext } from '../../context/ThemeContext';
+import heroImage from '../assets/heroimage.jpeg';
 
 const HomePage = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -47,6 +48,7 @@ const HomePage = () => {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-6">
+              
               <h1>Predict Crop Yields with Precision</h1>
               <p className="lead">
                 Our AI-powered analytics helps farmers and agricultural businesses make data-driven decisions for better crop yields and resource management.
@@ -55,8 +57,12 @@ const HomePage = () => {
             </div>
             <div className="col-md-6">
               {/* Placeholder for hero image */}
-              <div className="hero-image-placeholder">
-                <p className="text-center text-muted">[Hero Image Placeholder]</p>
+              <div className="hero-image-container">
+                <img 
+                  src={heroImage} 
+                  alt="AI-powered crop yield prediction" 
+                  className="img-fluid rounded hero-image"
+                />
               </div>
             </div>
           </div>
