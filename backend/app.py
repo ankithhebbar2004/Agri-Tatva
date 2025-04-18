@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 import sys
 from dotenv import load_dotenv
+import bcrypt  # Add this import for password hashing
 
 # Add parent directory to path so we can import from there
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -46,6 +47,7 @@ else:
     db = client[mongo_db]
 
 predictions_collection = db['predictions']
+users_collection = db['users']
 
 # Check if MongoDB connection is working and database exists
 def check_mongodb_connection():
@@ -114,6 +116,9 @@ def predict():
             avg_temp = data['avg_temp']
             Area = data['Area']
             Item = data['Item']
+            
+            # Get user ID from the request - this should be sent from the frontend
+            user_id = data.get('user_id')
         else:
             # Handle form data (original behavior)
             Year = request.form['Year']
@@ -122,14 +127,16 @@ def predict():
             avg_temp = request.form['avg_temp']
             Area = request.form['Area']
             Item = request.form['Item']
+            user_id = request.form.get('user_id')
 
         features = np.array([[Year, average_rain_fall_mm_per_year, pesticides_tonnes, avg_temp, Area, Item]], dtype=object)
         transformed_features = preprocessor.transform(features)
         prediction = dtr.predict(transformed_features).reshape(1, -1)
         
-        # Store prediction in MongoDB
+        # Store prediction in MongoDB with user reference
         prediction_record = {
             'timestamp': datetime.now(),
+            'user_id': user_id,  # Store user ID with the prediction
             'features': {
                 'Year': Year,
                 'average_rain_fall_mm_per_year': average_rain_fall_mm_per_year,
@@ -182,6 +189,66 @@ def check_db():
         'collection': 'predictions',
         'stats': stats
     })
+
+@app.route('/register', methods=['POST'])
+def register():
+    if request.is_json:
+        data = request.get_json()
+        
+        # Check if user already exists
+        existing_user = users_collection.find_one({'email': data['email']})
+        
+        if existing_user:
+            return jsonify({'success': False, 'message': 'User already exists with this email'})
+        
+        # Hash the password
+        hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+        
+        # Create user document
+        user = {
+            'name': data['name'],
+            'email': data['email'],
+            'password': hashed_password,  # Stored as hashed, not plaintext
+            'created_at': datetime.now()
+        }
+        
+        # Insert the user
+        result = users_collection.insert_one(user)
+        
+        # Create a response without password and with proper ID handling
+        user_response = {
+            '_id': str(result.inserted_id),
+            'name': data['name'],
+            'email': data['email'],
+            'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+        
+        return jsonify({'success': True, 'message': 'User registered successfully', 'user': user_response})
+    
+    return jsonify({'success': False, 'message': 'Invalid request format'})
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.is_json:
+        data = request.get_json()
+        
+        # Find user by email
+        user = users_collection.find_one({'email': data['email']})
+        
+        if not user:
+            return jsonify({'success': False, 'message': 'User not found. Kindly register.'})
+        
+        # Check password
+        if bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
+            # Create response without password
+            user_response = {k: v for k, v in user.items() if k != 'password'}
+            user_response['_id'] = str(user_response['_id'])  # Convert ObjectId to string
+            
+            return jsonify({'success': True, 'message': 'Login successful', 'user': user_response})
+        else:
+            return jsonify({'success': False, 'message': 'Incorrect password'})
+    
+    return jsonify({'success': False, 'message': 'Invalid request format'})
 
 if __name__ == "__main__":
     # Check MongoDB connection on startup

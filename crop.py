@@ -160,6 +160,208 @@ plt.title("Actual vs Predicted Crop Yield")
 plt.legend()
 plt.show()  
 
+# After the existing visualization code and before the serialization code, add these visualizations:
+
+# 1. Enhanced Actual vs Predicted visualization for multiple models
+plt.figure(figsize=(15, 10))
+plt.scatter(y_test, y_pred_knn, label='KNN Predictions', alpha=0.5, color='blue')
+plt.scatter(y_test, y_pred_dtr, label='Decision Tree Predictions', alpha=0.5, color='red')
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], 'k--', lw=3)
+plt.xlabel('Actual Yield', fontsize=14)
+plt.ylabel('Predicted Yield', fontsize=14)
+plt.title('Actual vs Predicted Yield Comparison Across Models', fontsize=16)
+plt.legend(fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('actual_vs_predicted_comparison.png')
+plt.show()
+
+# 2. Residual Plot Analysis
+plt.figure(figsize=(15, 10))
+
+# KNN Residuals
+residuals_knn = y_test - y_pred_knn
+plt.subplot(2, 2, 1)
+plt.scatter(y_pred_knn, residuals_knn, alpha=0.5)
+plt.axhline(y=0, color='r', linestyle='-')
+plt.xlabel('Predicted Values (KNN)', fontsize=12)
+plt.ylabel('Residuals', fontsize=12)
+plt.title('KNN Residual Plot', fontsize=14)
+plt.grid(True, alpha=0.3)
+
+# Decision Tree Residuals
+residuals_dtr = y_test - y_pred_dtr
+plt.subplot(2, 2, 2)
+plt.scatter(y_pred_dtr, residuals_dtr, alpha=0.5, color='orange')
+plt.axhline(y=0, color='r', linestyle='-')
+plt.xlabel('Predicted Values (Decision Tree)', fontsize=12)
+plt.ylabel('Residuals', fontsize=12)
+plt.title('Decision Tree Residual Plot', fontsize=14)
+plt.grid(True, alpha=0.3)
+
+# 3. Error Distribution Histogram
+plt.subplot(2, 2, 3)
+plt.hist(residuals_knn, bins=30, alpha=0.5, label='KNN Errors')
+plt.hist(residuals_dtr, bins=30, alpha=0.5, label='DT Errors')
+plt.xlabel('Prediction Error', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+plt.title('Error Distribution', fontsize=14)
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+# 4. QQ Plot for Residuals
+from scipy import stats
+plt.subplot(2, 2, 4)
+stats.probplot(residuals_knn, dist="norm", plot=plt)
+plt.title('QQ Plot (KNN Residuals)', fontsize=14)
+
+plt.tight_layout()
+plt.savefig('residual_analysis.png')
+plt.show()
+
+# 5. Feature Importance for Decision Tree
+if hasattr(dtr, 'feature_importances_'):
+    # Get feature names (numeric and one-hot encoded)
+    numeric_cols = ['Year', 'average_rain_fall_mm_per_year', 'pesticides_tonnes', 'avg_temp']
+    categorical_cols = ['Area', 'Item']
+    
+    # Get one-hot encoded column names
+    ohe_col_names = []
+    for col in categorical_cols:
+        unique_vals = X[col].unique()
+        # Skip the first value due to drop='first' in OneHotEncoder
+        for val in unique_vals[1:]:
+            ohe_col_names.append(f"{col}_{val}")
+    
+    # Combine all feature names
+    all_feature_names = numeric_cols + ohe_col_names
+    
+    # Get feature importances from DTR
+    importances = dtr.feature_importances_
+    
+    # We need to handle the fact that feature importance array might be shorter
+    # than our feature names due to how OneHotEncoder and ColumnTransformer work
+    if len(importances) <= len(all_feature_names):
+        feature_names = all_feature_names[:len(importances)]
+    else:
+        print("Warning: Feature importance array length doesn't match feature names")
+        feature_names = [f"Feature {i}" for i in range(len(importances))]
+    
+    # Sort feature importances
+    indices = np.argsort(importances)[-10:]  # Top 10 features
+    
+    plt.figure(figsize=(10, 8))
+    plt.barh(range(len(indices)), importances[indices], align='center')
+    plt.yticks(range(len(indices)), [feature_names[i] if i < len(feature_names) else f"Feature {i}" for i in indices])
+    plt.xlabel('Feature Importance')
+    plt.title('Top 10 Important Features (Decision Tree)')
+    plt.tight_layout()
+    plt.savefig('feature_importance.png')
+    plt.show()
+
+# 6. Cross-validation scores visualization
+plt.figure(figsize=(15, 8))
+
+# Extract metrics from each model for comparison
+model_names = []
+r2_scores = []
+mae_scores = []
+mse_scores = []
+
+for name, model in models.items():
+    model_names.append(name)
+    
+    # Calculate R² scores through cross-validation
+    r2_cv = cross_val_score(model, X_train_dummy, y_train, cv=5, scoring='r2')
+    r2_scores.append(np.mean(r2_cv))
+    
+    # Calculate MAE scores through cross-validation
+    mae_cv = -cross_val_score(model, X_train_dummy, y_train, cv=5, scoring='neg_mean_absolute_error')
+    mae_scores.append(np.mean(mae_cv))
+    
+    # Calculate MSE scores through cross-validation
+    mse_cv = -cross_val_score(model, X_train_dummy, y_train, cv=5, scoring='neg_mean_squared_error')
+    mse_scores.append(np.mean(mse_cv))
+
+# Performance comparison charts
+plt.subplot(1, 3, 1)
+bars = plt.bar(model_names, r2_scores)
+plt.title('R² Score by Model')
+plt.xticks(rotation=90)
+plt.ylim(0, 1)
+plt.grid(axis='y', alpha=0.3)
+# Add value labels on bars
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+            f'{height:.2f}', ha='center', va='bottom', rotation=0)
+
+plt.subplot(1, 3, 2)
+bars = plt.bar(model_names, mae_scores)
+plt.title('Mean Absolute Error by Model')
+plt.xticks(rotation=90)
+plt.grid(axis='y', alpha=0.3)
+# Add value labels
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+            f'{height:.0f}', ha='center', va='bottom', rotation=0)
+
+plt.subplot(1, 3, 3)
+bars = plt.bar(model_names, mse_scores)
+plt.title('Mean Squared Error by Model')
+plt.xticks(rotation=90)
+plt.grid(axis='y', alpha=0.3)
+# Add value labels
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+            f'{height:.0f}', ha='center', va='bottom', rotation=0)
+
+plt.tight_layout()
+plt.savefig('model_performance_comparison.png')
+plt.show()
+
+# 7. Learning curves
+from sklearn.model_selection import learning_curve
+
+def plot_learning_curve(estimator, X, y, title, ylim=None, cv=5,
+                        n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
+    plt.figure(figsize=(10, 6))
+    plt.title(title, fontsize=14)
+    if ylim is not None:
+        plt.ylim(*ylim)
+    plt.xlabel("Training examples", fontsize=12)
+    plt.ylabel("Score", fontsize=12)
+    
+    train_sizes, train_scores, test_scores = learning_curve(
+        estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes, scoring='r2')
+    
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(test_scores, axis=1)
+    test_scores_std = np.std(test_scores, axis=1)
+    
+    plt.grid(True, alpha=0.3)
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                     train_scores_mean + train_scores_std, alpha=0.1, color="r")
+    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
+                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training score")
+    plt.plot(train_sizes, test_scores_mean, 'o-', color="g", label="Cross-validation score")
+    
+    plt.legend(loc="best", fontsize=12)
+    return plt
+
+# Plot learning curves for KNN and Decision Tree
+plot_learning_curve(knn, X_train_dummy, y_train, "KNN Learning Curve", ylim=(0, 1.01))
+plt.savefig('knn_learning_curve.png')
+plt.show()
+
+plot_learning_curve(dtr, X_train_dummy, y_train, "Decision Tree Learning Curve", ylim=(0, 1.01))
+plt.savefig('dtr_learning_curve.png')
+plt.show()
+
 # Function to make predictions
 def prediction(Year, average_rain_fall_mm_per_year, pesticides_tonnes, avg_temp, Area, Item):
     # Create an array of the input features

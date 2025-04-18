@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './AuthForm.css';
 
-
 const AuthForm = ({ onLogin, goToHome }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -10,6 +9,8 @@ const AuthForm = ({ onLogin, goToHome }) => {
     confirmPassword: '',
     name: ''
   });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   
   const handleChange = (e) => {
     setFormData({
@@ -18,34 +19,81 @@ const AuthForm = ({ onLogin, goToHome }) => {
     });
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
     
-    // Simple validation
-    if (isLogin) {
-      if (formData.email && formData.password) {
-        // For now, just allow login with any data
-        console.log('Login successful', formData);
-        onLogin(true);
+    try {
+      if (isLogin) {
+        // Login logic
+        if (formData.email && formData.password) {
+          const response = await fetch('http://localhost:5000/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: formData.email,
+              password: formData.password
+            }),
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            console.log('Login successful', data);
+            // Store user data in localStorage or sessionStorage if needed
+            localStorage.setItem('user', JSON.stringify(data.user));
+            onLogin(true);
+          } else {
+            setError(data.message);
+          }
+        }
+      } else {
+        // Sign up validation
+        if (formData.password !== formData.confirmPassword) {
+          setError('Passwords do not match');
+          setLoading(false);
+          return;
+        }
+        
+        if (formData.email && formData.password && formData.name) {
+          const response = await fetch('http://localhost:5000/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              password: formData.password
+            }),
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            console.log('Signup successful', data);
+            // Auto login after signup
+            localStorage.setItem('user', JSON.stringify(data.user));
+            onLogin(true);
+          } else {
+            setError(data.message);
+          }
+        }
       }
-    } else {
-      // Sign up validation
-      if (formData.password !== formData.confirmPassword) {
-        alert('Passwords do not match');
-        return;
-      }
-      
-      if (formData.email && formData.password && formData.name) {
-        // For now, just simulate successful signup
-        console.log('Signup successful', formData);
-        // Auto login after signup
-        onLogin(true);
-      }
+    } catch (error) {
+      console.error('Auth error:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
   
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
+    setError('');
   };
   
   return (
@@ -54,6 +102,8 @@ const AuthForm = ({ onLogin, goToHome }) => {
       <div className="card shadow auth-card">
         <div className="card-body auth-card-body">
           <h2 className="text-center auth-header">{isLogin ? 'Login' : 'Sign Up'}</h2>
+          
+          {error && <div className="alert alert-danger">{error}</div>}
           
           <form onSubmit={handleSubmit} className="auth-form">
             {!isLogin && (
@@ -112,8 +162,12 @@ const AuthForm = ({ onLogin, goToHome }) => {
               </div>
             )}
             
-            <button type="submit" className="btn btn-primary w-100 mt-3 auth-button">
-              {isLogin ? 'Login' : 'Sign Up'}
+            <button 
+              type="submit" 
+              className="btn btn-primary w-100 mt-3 auth-button"
+              disabled={loading}
+            >
+              {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
             </button>
           </form>
           
@@ -130,7 +184,6 @@ const AuthForm = ({ onLogin, goToHome }) => {
             </p>
           </div>
          
-
           <div className="auth-divider">Or continue with</div>
           <div className="social-buttons">
             <button type="button" className="social-btn google-btn">
