@@ -7,6 +7,8 @@ import HomePage from './components/HomePage/HomePage';
 import About from './components/About/About';
 import Services from './components/Services/Services';
 import Contact from './components/Contact/Contact';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import ResetPassword from './components/ResetPassword/ResetPassword';
 import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
             path="/predict" 
             element={isLoggedIn ? <CropYieldForm goToHome={goToHome} /> : <Navigate to="/auth" />} 
           />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </div>
     );

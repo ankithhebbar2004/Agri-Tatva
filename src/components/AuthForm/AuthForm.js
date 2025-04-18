@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AuthForm.css';
+import { Link } from 'react-router-dom';
 
 const AuthForm = ({ onLogin, goToHome }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -145,6 +146,13 @@ const AuthForm = ({ onLogin, goToHome }) => {
                 onChange={handleChange}
                 required
               />
+              {isLogin && (
+                <div className="text-end mt-1">
+                  <Link to="/forgot-password" className="text-decoration-none small">
+                    Forgot Password?
+                  </Link>
+                </div>
+              )}
             </div>
             
             {!isLogin && (

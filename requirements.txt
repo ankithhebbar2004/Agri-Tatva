@@ -4,3 +4,4 @@ pip install numpy==1.22.3
 pip install scikit-learn==1.0.2
 pip install pymongo==4.3.3
 pip install python-dotenv==1.0.0
+pip install bcrypt

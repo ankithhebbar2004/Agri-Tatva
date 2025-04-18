@@ -9,6 +9,11 @@ import os
 import sys
 from dotenv import load_dotenv
 import bcrypt  # Add this import for password hashing
+import secrets  # Import for generating reset tokens
+import smtplib  # For sending emails
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime, timedelta
 
 # Add parent directory to path so we can import from there
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -247,6 +252,79 @@ def login():
             return jsonify({'success': True, 'message': 'Login successful', 'user': user_response})
         else:
             return jsonify({'success': False, 'message': 'Incorrect password'})
+    
+    return jsonify({'success': False, 'message': 'Invalid request format'})
+
+@app.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    if request.is_json:
+        data = request.get_json()
+        email = data.get('email')
+        
+        # Check if user exists
+        user = users_collection.find_one({'email': email})
+        
+        if not user:
+            return jsonify({'success': False, 'message': 'No account found with this email address.'})
+        
+        # Generate reset token
+        reset_token = secrets.token_urlsafe(32)
+        reset_expiry = datetime.now() + timedelta(hours=24)
+        
+        # Update user with reset token
+        users_collection.update_one(
+            {'email': email},
+            {'$set': {
+                'reset_token': reset_token,
+                'reset_expiry': reset_expiry
+            }}
+        )
+        
+        # In a production app, you would send an email with the reset link
+        reset_link = f"http://localhost:3000/reset-password?token={reset_token}"
+        
+        # For demo purposes, we'll return the link in the response
+        # In production, send this via email and don't return it in the response
+        return jsonify({
+            'success': True, 
+            'message': 'Password reset instructions sent to your email.',
+            'debug_link': reset_link  # Remove this in production
+        })
+    
+    return jsonify({'success': False, 'message': 'Invalid request format'})
+
+@app.route('/reset-password', methods=['POST'])
+def reset_password():
+    if request.is_json:
+        data = request.get_json()
+        token = data.get('token')
+        new_password = data.get('new_password')
+        
+        if not token or not new_password:
+            return jsonify({'success': False, 'message': 'Missing token or new password'})
+        
+        # Find user with this token
+        user = users_collection.find_one({
+            'reset_token': token,
+            'reset_expiry': {'$gt': datetime.now()}
+        })
+        
+        if not user:
+            return jsonify({'success': False, 'message': 'Invalid or expired reset token'})
+        
+        # Hash the new password
+        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+        
+        # Update user's password and remove token
+        users_collection.update_one(
+            {'_id': user['_id']},
+            {
+                '$set': {'password': hashed_password},
+                '$unset': {'reset_token': "", 'reset_expiry': ""}
+            }
+        )
+        
+        return jsonify({'success': True, 'message': 'Password has been reset successfully'})
     
     return jsonify({'success': False, 'message': 'Invalid request format'})
 
