@@ -14,6 +14,7 @@ import smtplib  # For sending emails
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
+import hashlib  # Add this import for creating stable user IDs from emails
 
 # Add parent directory to path so we can import from there
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -104,6 +105,12 @@ app = Flask(__name__,
            template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'))
 CORS(app)  # Enable CORS for all routes
 
+def generate_stable_user_id(email):
+    """Generate a stable user ID based on email address"""
+    # Create a hash of the email and take the first 16 chars as the ID
+    email_hash = hashlib.md5(email.lower().encode()).hexdigest()
+    return f"user_{email_hash[:16]}"
+
 # Routes
 @app.route('/')
 def index():
@@ -122,8 +129,12 @@ def predict():
             Area = data['Area']
             Item = data['Item']
             
-            # Get user ID from the request - this should be sent from the frontend
+            # Get user ID from the request
             user_id = data.get('user_id')
+            
+            # If no user_id but we have email, generate it
+            if not user_id and 'email' in data:
+                user_id = generate_stable_user_id(data['email'])
         else:
             # Handle form data (original behavior)
             Year = request.form['Year']
@@ -206,6 +217,9 @@ def register():
         if existing_user:
             return jsonify({'success': False, 'message': 'User already exists with this email'})
         
+        # Generate stable user ID from email
+        user_id = generate_stable_user_id(data['email'])
+        
         # Hash the password
         hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
         
@@ -213,7 +227,8 @@ def register():
         user = {
             'name': data['name'],
             'email': data['email'],
-            'password': hashed_password,  # Stored as hashed, not plaintext
+            'user_id': user_id,  # Add stable user_id field
+            'password': hashed_password,
             'created_at': datetime.now()
         }
         
@@ -223,6 +238,7 @@ def register():
         # Create a response without password and with proper ID handling
         user_response = {
             '_id': str(result.inserted_id),
+            'user_id': user_id,  # Include user_id in response
             'name': data['name'],
             'email': data['email'],
             'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -248,6 +264,17 @@ def login():
             # Create response without password
             user_response = {k: v for k, v in user.items() if k != 'password'}
             user_response['_id'] = str(user_response['_id'])  # Convert ObjectId to string
+            
+            # If user doesn't have user_id yet (older accounts), add it now
+            if 'user_id' not in user_response:
+                user_id = generate_stable_user_id(user['email'])
+                user_response['user_id'] = user_id
+                
+                # Update the user in the database with the new user_id
+                users_collection.update_one(
+                    {'_id': user['_id']},
+                    {'$set': {'user_id': user_id}}
+                )
             
             return jsonify({'success': True, 'message': 'Login successful', 'user': user_response})
         else:

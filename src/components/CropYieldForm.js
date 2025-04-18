@@ -32,8 +32,29 @@ function CropYieldForm({ goToHome }) {
     setLoading(true);
     setError(null);
     
+    // Get user info from localStorage
+    let user_id = null;
+    let email = null;
     try {
-      const response = await axios.post('http://localhost:5000/predict', formData, {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        const user = JSON.parse(userData);
+        user_id = user.user_id;
+        email = user.email;
+      }
+    } catch (err) {
+      console.error('Error getting user data from localStorage', err);
+    }
+    
+    try {
+      // Include user_id with the prediction request
+      const requestData = {
+        ...formData,
+        user_id: user_id,
+        email: email
+      };
+      
+      const response = await axios.post('http://localhost:5000/predict', requestData, {
         headers: {
           'Content-Type': 'application/json'
         }
