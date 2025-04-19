@@ -355,6 +355,18 @@ def reset_password():
     
     return jsonify({'success': False, 'message': 'Invalid request format'})
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    """Handle user logout requests
+    
+    Since authentication is managed client-side with localStorage,
+    this endpoint simply acknowledges the logout request.
+    """
+    return jsonify({
+        'success': True,
+        'message': 'Logout successful'
+    })
+
 if __name__ == "__main__":
     # Check MongoDB connection on startup
     check_mongodb_connection()

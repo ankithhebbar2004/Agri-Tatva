@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import areaOptions from '../data/areaOptions';
 import itemOptions from '../data/itemOptions';
-import backgroundImage from '../backgroundimage.jpg'; // Import background image
-import './CropYieldForm.css'; // Import the CSS file
+import backgroundImage from '../backgroundimage.jpg';
+import './CropYieldForm.css';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function CropYieldForm({ goToHome }) {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     Year: 2013,
     average_rain_fall_mm_per_year: '',
@@ -69,6 +74,11 @@ function CropYieldForm({ goToHome }) {
     }
   };
 
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
+
   return (
     <div className="form-container" style={{ 
       backgroundImage: `url(${backgroundImage})`,
@@ -76,7 +86,10 @@ function CropYieldForm({ goToHome }) {
       backgroundPosition: 'center'
     }}>
       <div className="crop-yield-container">
-        <button className="home-button btn btn-outline-secondary mb-3" onClick={goToHome}>Back to Home</button>
+        <div className="header-actions">
+          <button className="home-button btn btn-outline-secondary mb-3" onClick={goToHome}>Back to Home</button>
+          <button className="logout-button btn btn-outline-danger mb-3 ms-2" onClick={handleLogout}>Sign Out</button>
+        </div>
         
         <div className="form-header">
           <h2>Crop Yield Prediction</h2>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 import CropYieldForm from './components/CropYieldForm';
@@ -10,15 +10,11 @@ import Contact from './components/Contact/Contact';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider, AuthContext } from './context/AuthContext';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = (status) => {
-    setIsLoggedIn(status);
-  };
-  
   function AppRoutes() {
+    const { isLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
     
     const goToHome = () => {
@@ -34,7 +30,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route 
             path="/auth" 
-            element={!isLoggedIn ? <AuthForm onLogin={handleLogin} goToHome={goToHome} /> : <Navigate to="/predict" />} 
+            element={!isLoggedIn ? <AuthForm goToHome={goToHome} /> : <Navigate to="/predict" />} 
           />
           <Route 
             path="/predict" 
@@ -49,9 +45,11 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Router>
-        <AppRoutes />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

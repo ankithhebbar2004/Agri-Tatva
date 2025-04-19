@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './About.css';
 import '../Navbar.css';
 import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
 import { ThemeContext } from '../../context/ThemeContext';
+import { AuthContext } from '../../context/AuthContext';
 import logo from '../assets/logo.png';
 
 const About = () => {
   const { darkMode } = useContext(ThemeContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const underlineRef = useRef(null);
   const activeNavRef = useRef(null);
   const [slideDirection, setSlideDirection] = useState('');
@@ -47,6 +50,11 @@ const About = () => {
     return () => window.removeEventListener('resize', positionUnderline);
   }, []);
   
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
+  
   return (
     <div className={`about-page ${darkMode ? 'dark-mode' : ''}`}>
       {/* Navbar */}
@@ -75,7 +83,16 @@ const About = () => {
               </li>
             </ul>
             <div className="d-flex align-items-center">
-              <Link to="/auth" className="btn btn-outline-success me-2">Login / Signup</Link>
+              {isLoggedIn ? (
+                <button 
+                  onClick={handleLogout} 
+                  className="btn btn-outline-danger me-2"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <Link to="/auth" className="btn btn-outline-success me-2">Login / Signup</Link>
+              )}
               <DarkModeToggle />
             </div>
           </div>

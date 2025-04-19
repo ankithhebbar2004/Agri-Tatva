@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './AuthForm.css';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
-const AuthForm = ({ onLogin, goToHome }) => {
+const AuthForm = ({ goToHome }) => {
+  const { login } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
@@ -44,9 +46,7 @@ const AuthForm = ({ onLogin, goToHome }) => {
           
           if (data.success) {
             console.log('Login successful', data);
-            // Store user data in localStorage or sessionStorage if needed
-            localStorage.setItem('user', JSON.stringify(data.user));
-            onLogin(true);
+            login(data.user); // Use login from AuthContext instead of localStorage
           } else {
             setError(data.message);
           }
@@ -76,9 +76,7 @@ const AuthForm = ({ onLogin, goToHome }) => {
           
           if (data.success) {
             console.log('Signup successful', data);
-            // Auto login after signup
-            localStorage.setItem('user', JSON.stringify(data.user));
-            onLogin(true);
+            login(data.user); // Use login from AuthContext
           } else {
             setError(data.message);
           }
