@@ -17,7 +17,7 @@
   "scripts": {
     "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
     "start-frontend": "react-scripts start",
-    "start-backend": "cd ./backend && set PYTHONIOENCODING=utf-8 && python app.py",
+    "start-backend": "cd ./backend && set PYTHONIOENCODING=utf-8 && (taskkill /F /IM python.exe /T || echo No python process to kill) && python app.py",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
