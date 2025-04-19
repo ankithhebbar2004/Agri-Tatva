@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
 import { ThemeContext } from '../../context/ThemeContext';
 import './ForgotPassword.css';
 import logo from '../assets/logo.png';
 
 const ForgotPassword = () => {
+  const navigate = useNavigate(); // Add navigate hook
   const { darkMode } = useContext(ThemeContext);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -25,10 +26,17 @@ const ForgotPassword = () => {
       
       if (response.data.success) {
         setResetSent(true);
-        setMessage(response.data.message);
+        setMessage('Password reset link generated successfully.');
+        
         // In development mode, store the debug link
         if (response.data.debug_link) {
           setDebugLink(response.data.debug_link);
+          
+          // Extract the token from debug link
+          const token = response.data.debug_link.split('token=')[1];
+          
+          // Redirect directly to the reset password page with token
+          navigate(`/reset-password?token=${token}`);
         }
       } else {
         setIsError(true);
@@ -95,18 +103,9 @@ const ForgotPassword = () => {
                   <div className="alert alert-success mb-3">
                     {message}
                   </div>
-                  
                   <p>
-                    Please check your email inbox and spam folder for the password reset link.
+                    Redirecting you to reset password page...
                   </p>
-                  
-                  {/* Only show debug link in development mode */}
-                  {debugLink && (
-                    <div className="debug-link mt-3 mb-3">
-                      <p className="mb-1"><small>Development Only - Reset Link:</small></p>
-                      <a href={debugLink} className="small">{debugLink}</a>
-                    </div>
-                  )}
                 </div>
               )}
               

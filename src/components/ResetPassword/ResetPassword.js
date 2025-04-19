@@ -9,7 +9,7 @@ const ResetPassword = () => {
   const { darkMode } = useContext(ThemeContext);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('Please enter and confirm your new password.');
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resetComplete, setResetComplete] = useState(false);
@@ -25,6 +25,9 @@ const ResetPassword = () => {
   useEffect(() => {
     if (!token) {
       navigate('/forgot-password');
+    } else {
+      // If token exists, display welcoming message
+      setMessage('Your password reset link has been received. Please create a new password below.');
     }
   }, [token, navigate]);
   
@@ -57,7 +60,7 @@ const ResetPassword = () => {
       
       if (response.data.success) {
         setResetComplete(true);
-        setMessage(response.data.message);
+        setMessage('Password has been reset successfully! You can now login with your new password.');
         // Redirect to login after a delay
         setTimeout(() => {
           navigate('/auth');
@@ -89,7 +92,7 @@ const ResetPassword = () => {
               {!resetComplete ? (
                 <>
                   <p className="text-center mb-4">
-                    Please enter and confirm your new password.
+                    {message}
                   </p>
                   
                   <form onSubmit={handleSubmit}>
@@ -117,8 +120,8 @@ const ResetPassword = () => {
                       />
                     </div>
                     
-                    {message && (
-                      <div className={`alert ${isError ? 'alert-danger' : 'alert-success'} mb-3`}>
+                    {isError && (
+                      <div className="alert alert-danger mb-3">
                         {message}
                       </div>
                     )}
