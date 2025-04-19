@@ -5,6 +5,9 @@ import '../Navbar.css';
 import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
 import { ThemeContext } from '../../context/ThemeContext';
 import logo from '../assets/logo.png';
+import agri from '../assets/agri.png';
+import soil from '../assets/soil.png';
+import pred from '../assets/agripred.png';
 
 const Services = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -92,7 +95,7 @@ const Services = () => {
             <div className="col-md-4 mb-4">
               <div className="service-card">
                 <div className="service-icon">
-                  <p className="text-center text-muted">[Icon]</p>
+                <img src={pred} alt=" PredAnalysis" className="service-icon-img rounded-circle" />
                 </div>
                 <h3>Crop Yield Prediction</h3>
                 <p>
@@ -104,7 +107,7 @@ const Services = () => {
             <div className="col-md-4 mb-4">
               <div className="service-card">
                 <div className="service-icon">
-                  <p className="text-center text-muted">[Icon]</p>
+                <img src={soil} alt=" Soil Analysis" className="service-icon-img rounded-circle" />
                 </div>
                 <h3>Soil Analysis</h3>
                 <p>
@@ -116,7 +119,7 @@ const Services = () => {
             <div className="col-md-4 mb-4">
               <div className="service-card">
                 <div className="service-icon">
-                  <p className="text-center text-muted">[Icon]</p>
+                <img src={agri} alt="Agricultural Consulting" className="service-icon-img rounded-circle" />
                 </div>
                 <h3>Agricultural Consulting</h3>
                 <p>

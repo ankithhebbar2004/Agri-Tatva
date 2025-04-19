@@ -58,3 +58,27 @@
     font-weight: bold;
     color: #198754 !important;
   }  
+
+  .service-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .service-icon-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%; /* Makes the image round */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
+                0 0 15px rgba(25, 135, 84, 0.4); /* Added green glow effect matching brand color */
+    transition: all 0.3s ease;
+  }
+  
+  /* Enhanced hover effect with stronger glow */
+  .service-icon-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15),
+                0 0 10px rgba(25, 135, 84, 0.6); /* Stronger glow on hover */
+  }
