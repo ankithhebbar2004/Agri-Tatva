@@ -110,7 +110,7 @@ const Contact = () => {
               <div className="contact-info mt-4">
                 <div className="contact-item">
                   <h5>Address</h5>
-                  <p>123 Agricultural Way, Farmville, CA 95814</p>
+                  <p>123 Agricultural Way, Nitte Karkala</p>
                 </div>
                 <div className="contact-item">
                   <h5>Email</h5>
@@ -119,10 +119,6 @@ const Contact = () => {
                 <div className="contact-item">
                   <h5>Phone</h5>
                   <p>+1 (123) 456-7890</p>
-                </div>
-                <div className="contact-item">
-                  <h5>Hours</h5>
-                  <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
                 </div>
               </div>
 
@@ -134,7 +130,7 @@ const Contact = () => {
                   </div>
                   <div className="contact-method-details">
                     <div className="contact-method-title">Main Office</div>
-                    <p>123 Agricultural Way, Farmville<br/>Sacramento, CA 95814</p>
+                    <p>123 Agricultural Way, Nitte<br/>Karkala, KA 574117</p>
                   </div>
                 </div>
                 

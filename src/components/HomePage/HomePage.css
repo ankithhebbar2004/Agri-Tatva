@@ -418,3 +418,209 @@
     font-size: 1.8rem;
   }
 }
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 95%;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar-nav {
+    margin-bottom: 15px;
+  }
+  
+  .nav-underline {
+    display: none;
+  }
+  
+  .hero-section {
+    padding: 60px 0;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+  
+  .process-connector {
+    display: none;
+  }
+  
+  .process-step {
+    margin-bottom: 30px;
+  }
+  
+  .stats-section .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 0;
+    text-align: center;
+  }
+  
+  .hero-section .btn {
+    margin-bottom: 30px;
+  }
+  
+  .feature-card {
+    padding: 20px 15px;
+  }
+  
+  .testimonial-content {
+    padding: 15px;
+  }
+  
+  .cta-section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .footer h5 {
+    margin-top: 20px;
+  }
+  
+  .process-flow .row {
+    flex-direction: column;
+  }
+  
+  .process-step {
+    margin-bottom: 30px;
+  }
+}
+
+/* Mobile Navbar Fixes for HomePage */
+@media (max-width: 991px) {
+  .navbar-expand-lg .navbar-collapse {
+    display: none;
+  }
+  
+  .navbar-expand-lg .navbar-collapse.show {
+    display: block;
+  }
+  
+  .navbar-expand-lg .navbar-toggler {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Update the navbar positioning for mobile */
+  .navbar {
+    position: relative;
+  }
+  
+  /* Ensure the navbar is visible */
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+  }
+  
+  /* Add spacing for the collapsed navbar content */
+  .navbar-nav {
+    padding: 10px 0;
+    background-color: var(--bg-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  body.dark-mode .navbar-nav {
+    background-color: var(--bg-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-section {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Ensure buttons are visible and properly sized */
+  .navbar .btn {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    margin: 5px;
+  }
+  
+  .navbar-brand {
+    margin-right: 0;
+  }
+  
+  /* Improve spacing in mobile menu */
+  .navbar-nav .nav-item {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section h1 {
+    font-size: 1.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
+  }
+  
+  .testimonial-content p {
+    font-size: 0.9rem;
+  }
+  
+  .stat-item {
+    padding: 10px 5px;
+  }
+  
+  .stats-section .stat-number {
+    font-size: 1.5rem;
+  }
+  
+  .stats-section .stat-label {
+    font-size: 0.8rem;
+  }
+  
+  .feature-icon {
+    height: 60px;
+    width: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .cta-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .cta-section .lead {
+    font-size: 1rem;
+  }
+  
+  .cta-section .btn {
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .testimonial-author-info h5 {
+    font-size: 0.9rem;
+  }
+  
+  .testimonial-author-info span {
+    font-size: 0.8rem;
+  }
+  
+  .stat-item {
+    margin: 5px 0;
+  }
+}

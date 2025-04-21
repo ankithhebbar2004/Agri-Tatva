@@ -76,7 +76,6 @@
   font-size: 1.5rem;
 }
 
-
 /* Dark mode styles */
 body.dark-mode {
   background-color: #1a1a1a;
@@ -148,4 +147,49 @@ body.dark-mode .about-image-placeholder,
 body.dark-mode .service-icon {
   background-color: #444444;
   color: #ffffff;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .app-container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  body {
+    font-size: 15px;
+  }
+  
+  .app-container {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 13px;
+  }
+  
+  .app-container {
+    padding: 0 5px;
+  }
 }

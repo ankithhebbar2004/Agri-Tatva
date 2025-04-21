@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 import CropYieldForm from './components/CropYieldForm';
@@ -13,6 +13,20 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
 function App() {
+  // Add useEffect to initialize Bootstrap's JavaScript
+  useEffect(() => {
+    // Load Bootstrap JavaScript for navbar toggling
+    const script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js";
+    script.integrity = "sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p";
+    script.crossOrigin = "anonymous";
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   function AppRoutes() {
     const { isLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();

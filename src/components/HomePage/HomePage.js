@@ -18,6 +18,9 @@ const HomePage = () => {
   const location = useLocation();
   const [prevPath, setPrevPath] = useState('/');
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
   
   // Stats counter animation
   const [counters, setCounters] = useState({
@@ -115,10 +118,19 @@ const HomePage = () => {
           <div className="navbar-brand">
             <img src={logo} alt="Logo" width="100" height="100" className="d-inline-block align-top" />
           </div>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <button 
+            className="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav" 
+            aria-expanded={!isNavCollapsed ? true : false} 
+            aria-label="Toggle navigation"
+            onClick={handleNavCollapse}
+          >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
             <ul className="navbar-nav mx-auto underline-navbar-container">
               <div className={`nav-underline ${slideDirection}`} ref={underlineRef}></div>
               <li className="nav-item">
@@ -319,10 +331,9 @@ const HomePage = () => {
                 </div>
                 <p>"This tool completely changed how I plan my growing season. My wheat yield increased by 28% in the first year of using this platform!"</p>
                 <div className="testimonial-author">
-                  <div className="testimonial-author-image"></div>
                   <div className="testimonial-author-info">
-                    <h5>John Peterson</h5>
-                    <span>Wheat Farmer, Iowa</span>
+                    <h5>Pramod Gautam</h5>
+                    <span>Wheat Farmer, Nitte</span>
                   </div>
                 </div>
               </div>
@@ -339,10 +350,9 @@ const HomePage = () => {
                 </div>
                 <p>"The crop recommendations were spot-on for my soil conditions. I've never had such a successful harvest of soybeans in 15 years of farming."</p>
                 <div className="testimonial-author">
-                  <div className="testimonial-author-image"></div>
                   <div className="testimonial-author-info">
-                    <h5>Sarah Johnson</h5>
-                    <span>Family Farm Owner, Nebraska</span>
+                    <h5>Subhansh Palekar</h5>
+                    <span>Family Farm Owner, Karkala</span>
                   </div>
                 </div>
               </div>
@@ -359,10 +369,9 @@ const HomePage = () => {
                 </div>
                 <p>"The weather prediction integration saved my crops during an unexpected dry spell. The early warnings gave me time to adjust irrigation and save the season."</p>
                 <div className="testimonial-author">
-                  <div className="testimonial-author-image"></div>
                   <div className="testimonial-author-info">
-                    <h5>Michael Garcia</h5>
-                    <span>Corn Producer, Illinois</span>
+                    <h5>Harish Dhandev</h5>
+                    <span>Corn Producer, Amritsar</span>
                   </div>
                 </div>
               </div>

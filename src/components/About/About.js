@@ -110,10 +110,10 @@ const About = () => {
               <img src={abouts} alt=" About us" className="about-image-placeholder mb-4" />
               
               <p className="lead">
-                Founded in 2023, Crop Yield Predictor is dedicated to helping farmers maximize their crop yields through data-driven insights.
+                Crop Yield Predictor is dedicated to helping farmers maximize their crop yields through data-driven insights.
               </p>
               <p>
-                Our team of agricultural experts and data scientists has developed a sophisticated machine learning model that analyzes various factors 
+                Our team has developed a sophisticated machine learning model that analyzes various factors 
                 such as soil type, climate conditions, and historical data to predict crop yields with remarkable accuracy.
               </p>
               <p>

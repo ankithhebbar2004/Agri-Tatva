@@ -53,3 +53,155 @@
 .underline-navbar-container {
   position: relative;
 }
+
+/* Mobile Navbar Fixes */
+.navbar {
+  display: flex !important;
+  width: 100% !important;
+}
+
+.navbar-collapse {
+  flex-basis: 100%;
+}
+
+.navbar-toggler {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Ensure mobile menu is visible when toggled */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-primary);
+    padding: 1rem;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  body.dark-mode .navbar-collapse {
+    background-color: var(--bg-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .navbar .container {
+    position: relative;
+  }
+  
+  .navbar-nav {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-nav .nav-item {
+    margin: 8px 0;
+  }
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .navbar .container {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar-nav .nav-link {
+    padding: 8px 12px;
+  }
+  
+  .underline-navbar-container {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-brand img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .navbar-nav {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .navbar-nav .nav-link {
+    text-align: center;
+    padding: 12px 0;
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .navbar-nav .nav-item:last-child .nav-link {
+    border-bottom: none;
+  }
+  
+  .navbar-toggler {
+    margin-right: 10px;
+  }
+  
+  .nav-underline {
+    display: none;
+  }
+  
+  .navbar .container {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .navbar-toggler {
+    padding: 4px 8px;
+    font-size: 0.9rem;
+  }
+  
+  /* Ensure buttons are properly displayed */
+  .d-flex.align-items-center {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .navbar-nav .nav-link {
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+  
+  .btn {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .container {
+    padding: 5px;
+  }
+  
+  .navbar-brand {
+    margin-right: 5px;
+  }
+  
+  .navbar-brand img {
+    width: 50px;
+    height: 50px;
+  }
+}
