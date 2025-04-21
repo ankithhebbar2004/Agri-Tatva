@@ -6,6 +6,7 @@ import backgroundImage from '../backgroundimage.jpg';
 import './CropYieldForm.css';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import MetricsSlideshow from './MetricsSlideshow/MetricsSlideshow';
 
 function CropYieldForm({ goToHome }) {
   const { user, logout } = useContext(AuthContext);
@@ -23,6 +24,7 @@ function CropYieldForm({ goToHome }) {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showMetricsSlideshow, setShowMetricsSlideshow] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,6 +79,33 @@ function CropYieldForm({ goToHome }) {
   const handleLogout = async () => {
     await logout();
     navigate('/');
+  };
+
+  const renderPredictionResults = () => {
+    if (prediction !== null) {
+      return (
+        <div className="results-section">
+          <h3>Prediction Results</h3>
+          <div className="results-content">
+            <div className="result-card">
+              <div className="result-value">{prediction.toFixed(2)}</div>
+              <div className="result-label">Predicted Yield (hg/ha)</div>
+            </div>
+            <div className="result-card">
+              <div className="result-value">{(prediction / 100).toFixed(2)}</div>
+              <div className="result-label">Tonnes per Hectare</div>
+            </div>
+          </div>
+          <button 
+            className="metrics-button"
+            onClick={() => setShowMetricsSlideshow(true)}
+          >
+            View Performance Metrics
+          </button>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -206,21 +235,12 @@ function CropYieldForm({ goToHome }) {
         
         {error && <div className="alert alert-danger mt-3">{error}</div>}
         
-        {prediction !== null && (
-          <div className="results-section">
-            <h3>Prediction Results</h3>
-            <div className="results-content">
-              <div className="result-card">
-                <div className="result-value">{prediction.toFixed(2)}</div>
-                <div className="result-label">Predicted Yield (hg/ha)</div>
-              </div>
-              <div className="result-card">
-                <div className="result-value">{(prediction / 100).toFixed(2)}</div>
-                <div className="result-label">Tonnes per Hectare</div>
-              </div>
-            </div>
-          </div>
-        )}
+        {renderPredictionResults()}
+        
+        <MetricsSlideshow 
+          isOpen={showMetricsSlideshow} 
+          onClose={() => setShowMetricsSlideshow(false)} 
+        />
       </div>
     </div>
   );

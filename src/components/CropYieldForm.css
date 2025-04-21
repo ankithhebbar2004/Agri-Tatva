@@ -169,6 +169,23 @@ body.dark-mode .home-button:hover {
   border-color: #2ea043;
 }
 
+/* Add a style for the metrics button */
+.metrics-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.metrics-button:hover {
+  background-color: #0b7dda;
+}
+
 /* Results section styling */
 .results-section {
   margin-top: 2rem;
