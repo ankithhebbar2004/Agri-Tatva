@@ -6,6 +6,7 @@ import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
 import { ThemeContext } from '../../context/ThemeContext';
 import { AuthContext } from '../../context/AuthContext';
 import logo from '../assets/logo.png';
+import abouts from '../assets/about.jpg';
 
 const About = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -105,9 +106,9 @@ const About = () => {
           <div className="row">
             <div className="col-md-8 offset-md-2 text-center">
               <h1 className="mb-4">About Us</h1>
-              <div className="about-image-placeholder mb-4">
-                <p className="text-center text-muted">[Team Image Placeholder]</p>
-              </div>
+              
+              <img src={abouts} alt=" About us" className="about-image-placeholder mb-4" />
+              
               <p className="lead">
                 Founded in 2023, Crop Yield Predictor is dedicated to helping farmers maximize their crop yields through data-driven insights.
               </p>

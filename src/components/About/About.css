@@ -4,14 +4,21 @@
   }
   
   .about-image-placeholder {
-    height: 250px;
-    background-color: #e9ecef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
   }
   
+  .about-image-placeholder:hover {
+    transform: scale(1.02);
+  }
+  
+  .dark-mode .about-image-placeholder {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
   .footer {
     margin-top: auto;
   }
