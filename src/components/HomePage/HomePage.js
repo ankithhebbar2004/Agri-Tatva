@@ -430,6 +430,7 @@ const HomePage = () => {
           </div>
           <div className="text-center mt-3">
             <p className="mb-0">© {new Date().getFullYear()} Crop Yield Predictor. All rights reserved.</p>
+            <small className="text-muted">Deployed on Vercel</small>
           </div>
         </div>
       </footer>
