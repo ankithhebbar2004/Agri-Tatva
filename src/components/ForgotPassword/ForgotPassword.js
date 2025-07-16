@@ -13,7 +13,7 @@ const ForgotPassword = () => {
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resetSent, setResetSent] = useState(false);
-  const [debugLink, setDebugLink] = useState(''); // For demo purposes only
+  // const [debugLink, setDebugLink] = useState(''); // For demo purposes only
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const ForgotPassword = () => {
     setIsError(false);
     
     try {
-      const response = await axios.post('http://localhost:5000/forgot-password', { email });
+      const response = await axios.post('/api/forgot-password', { email });
       
       if (response.data.success) {
         setResetSent(true);
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
         
         // In development mode, store the debug link
         if (response.data.debug_link) {
-          setDebugLink(response.data.debug_link);
+          // setDebugLink(response.data.debug_link);
           
           // Extract the token from debug link
           const token = response.data.debug_link.split('token=')[1];

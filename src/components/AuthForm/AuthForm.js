@@ -31,7 +31,7 @@ const AuthForm = ({ goToHome }) => {
       if (isLogin) {
         // Login logic
         if (formData.email && formData.password) {
-          const response = await fetch('http://localhost:5000/login', {
+          const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const AuthForm = ({ goToHome }) => {
         }
         
         if (formData.email && formData.password && formData.name) {
-          const response = await fetch('http://localhost:5000/register', {
+          const response = await fetch('/api/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -96,31 +96,31 @@ const AuthForm = ({ goToHome }) => {
   };
 
   // When submitting predictions, get the user_id from localStorage:
-  const userData = localStorage.getItem('user');
-  let userId = null;
+  // const userData = localStorage.getItem('user');
+  // let userId = null;
 
-  if (userData) {
-    const user = JSON.parse(userData);
-    userId = user.user_id;  // Use the stable user_id field we added
-  }
+  // if (userData) {
+  //   const user = JSON.parse(userData);
+  //   userId = user.user_id;  // Use the stable user_id field we added
+  // }
 
   // Then include it in your prediction API call
-  const submitPrediction = async (predictionData) => {
-    try {
-      const response = await fetch('http://localhost:5000/predict', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...predictionData,
-          user_id: userId  // Add the user ID here
-        })
-      });
-      const data = await response.json();
-      console.log('Prediction response:', data);
-    } catch (error) {
-      console.error('Prediction error:', error);
-    }
-  };
+  // const submitPrediction = async (predictionData) => {
+  //   try {
+  //     const response = await fetch('/api/predict', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         ...predictionData,
+  //         user_id: userId  // Add the user ID here
+  //       })
+  //     });
+  //     const data = await response.json();
+  //     console.log('Prediction response:', data);
+  //   } catch (error) {
+  //     console.error('Prediction error:', error);
+  //   }
+  // };
   
   return (
     <div className="auth-container">

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import MetricsSlideshow from './MetricsSlideshow/MetricsSlideshow';
 
 function CropYieldForm({ goToHome }) {
-  const { user, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -61,7 +61,7 @@ function CropYieldForm({ goToHome }) {
         email: email
       };
       
-      const response = await axios.post('http://localhost:5000/predict', requestData, {
+      const response = await axios.post('/api/predict', requestData, {
         headers: {
           'Content-Type': 'application/json'
         }
