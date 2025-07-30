@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './HomePage.css';
 import '../Navbar.css';
 import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
@@ -11,7 +11,7 @@ import logo from '../assets/logo.png';
 const HomePage = () => {
   const { darkMode } = useContext(ThemeContext);
   const { isLoggedIn, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const underlineRef = useRef(null);
   const activeNavRef = useRef(null);
   const [slideDirection, setSlideDirection] = useState('');

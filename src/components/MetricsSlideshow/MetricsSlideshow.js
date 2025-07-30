@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './MetricsSlideshow.css';
 
 // Import metrics images
@@ -17,17 +17,17 @@ const MetricsSlideshow = ({ isOpen, onClose }) => {
     // Add more metric images as needed
   ];
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === metricsImages.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [metricsImages.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? metricsImages.length - 1 : prevIndex - 1
     );
-  };
+  }, [metricsImages.length]);
 
   // Close the slideshow when Escape key is pressed
   useEffect(() => {
@@ -48,7 +48,7 @@ const MetricsSlideshow = ({ isOpen, onClose }) => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, nextSlide, prevSlide]);
 
   if (!isOpen) return null;
 
